@@ -23,6 +23,8 @@ public class StudentController {
 
 	@GetMapping("/getJackson")
 	public StudentResponse getStu() {
-		return new StudentResponse(1, "Abdul", "Hannan");
+		StudentResponse studentResponse = new StudentResponse(1, "Abdul", "Hannan");
+		studentResponse.setFirstName("Believer");
+		return studentResponse;
 	}
 }
