@@ -1,5 +1,6 @@
 package demo.entity;
 
+import demo.request.CreateStudentRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +18,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "student")
 public class Student {
 
+	public Student(CreateStudentRequest createStudentRequest) {
+		this.first_name = createStudentRequest.getFirstName();
+		this.last_name = createStudentRequest.getLastName();
+		this.email = createStudentRequest.getEmail();
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -30,4 +37,5 @@ public class Student {
 
 	@Column(name = "email")
 	private String email;
+
 }
