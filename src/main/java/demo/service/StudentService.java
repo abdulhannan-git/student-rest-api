@@ -22,21 +22,28 @@ public class StudentService {
 
 	public Student createStudent(CreateStudentRequest createStudentRequest) {
 		return studentRepository.save(new Student(createStudentRequest));
-		
-	}
-	
-	public Student updateStudent(UpdateStudentRequest updateStudentRequest) {
-		Student student = studentRepository.findById(updateStudentRequest.getId()).get();
-		if(student.getFirst_name()!=null && !student.getFirst_name().isEmpty()) {
-			student.setFirst_name(updateStudentRequest.getFirst_name());;
-		}
-		studentRepository.save(student);
-		return student;
+
 	}
 
+	public Student updateStudent(UpdateStudentRequest updateStudentRequest) {
+		Student student = studentRepository.findById(updateStudentRequest.getId()).get();
+		if (student.getFirst_name() != null && !student.getFirst_name().isEmpty()) {
+			student.setFirst_name(updateStudentRequest.getFirst_name());
+		}
+		if (student.getLast_name() != null && !student.getLast_name().isEmpty()) {
+			student.setLast_name(updateStudentRequest.getLast_name());
+		}
+		if (student.getEmail() != null && !student.getEmail().isEmpty()) {
+			student.setEmail(updateStudentRequest.getEmail());
+		}
+		return studentRepository.save(student);
+
+	}
+
+	public void deleteStudent(long id) {
+		studentRepository.deleteById(id);
+	}
 	
-	
-	
-	
+
 
 }
