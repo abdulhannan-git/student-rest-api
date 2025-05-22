@@ -27,11 +27,11 @@ public class StudentService {
 
 	public Student updateStudent(UpdateStudentRequest updateStudentRequest) {
 		Student student = studentRepository.findById(updateStudentRequest.getId()).get();
-		if (student.getFirst_name() != null && !student.getFirst_name().isEmpty()) {
-			student.setFirst_name(updateStudentRequest.getFirst_name());
+		if (student.getFirstName() != null && !student.getFirstName().isEmpty()) {
+			student.setFirstName(updateStudentRequest.getFirst_name());
 		}
-		if (student.getLast_name() != null && !student.getLast_name().isEmpty()) {
-			student.setLast_name(updateStudentRequest.getLast_name());
+		if (student.getLastName() != null && !student.getLastName().isEmpty()) {
+			student.setLastName(updateStudentRequest.getLast_name());
 		}
 		if (student.getEmail() != null && !student.getEmail().isEmpty()) {
 			student.setEmail(updateStudentRequest.getEmail());
@@ -43,7 +43,17 @@ public class StudentService {
 	public void deleteStudent(long id) {
 		studentRepository.deleteById(id);
 	}
-	
 
+	public List<Student> getByFisrtName(String firstName) {
+		return studentRepository.findByFirstName(firstName);
+	}
+
+	public List<Student> getByLastName(String lastName) {
+		return studentRepository.findByLastName(lastName);
+	}
+
+	public List<Student> getByFirstNameAndLastName(String firstName, String lastName) {
+		return studentRepository.findByFirstNameAndLastName(firstName, lastName);
+	}
 
 }

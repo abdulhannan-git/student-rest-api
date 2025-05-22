@@ -70,13 +70,39 @@ public class StudentController {
 		studentService.deleteStudent(id);
 		return "Student record has been deleted successfully using request parameter";
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
 	public String deleteStudent(@PathVariable long id) {
 		studentService.deleteStudent(id);
 		return "Student record has been deleted successfully using path variable..";
 	}
-	
-	
+
+	@GetMapping("getByFirstName/{firstName}")
+	public List<StudentResponse> getByFistName(@PathVariable String firstName) {
+		List<Student> student = studentService.getByFisrtName(firstName);
+
+		List<StudentResponse> studentResponseList = new ArrayList<>();
+		student.stream().forEach(s -> studentResponseList.add(new StudentResponse(s)));
+		return studentResponseList;
+	}
+
+	@GetMapping("getByLastName/{lastName}")
+	public List<StudentResponse> getByLastName(@PathVariable String lastName) {
+		List<Student> studentList = studentService.getByLastName(lastName);
+		List<StudentResponse> studentResponseList = new ArrayList<>();
+		studentList.stream().forEach(s -> studentResponseList.add(new StudentResponse(s)));
+		return studentResponseList;
+
+	}
+
+	@GetMapping("/getByFirstNameAndLastName/{firstName}/{lastName}")
+	public List<StudentResponse> getByFirstNameAndLastName(@PathVariable String firstName,
+			@PathVariable String lastName) {
+		List<Student> student = studentService.getByFirstNameAndLastName(firstName, lastName);
+
+		List<StudentResponse> studentResponseList = new ArrayList<>();
+		student.stream().forEach(s -> studentResponseList.add(new StudentResponse(s)));
+		return studentResponseList;
+	}
 
 }

@@ -48,8 +48,8 @@ public class StudentResponse {
 
 	public StudentResponse(Student student) {
 		this.id = student.getId();
-		this.firstName = student.getFirst_name();
-		this.lastName = student.getLast_name();
+		this.firstName = student.getFirstName();
+		this.lastName = student.getLastName();
 		this.email = student.getEmail();
 	}
 }
