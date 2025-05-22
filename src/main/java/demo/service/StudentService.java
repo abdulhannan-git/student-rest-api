@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import demo.entity.Student;
 import demo.repository.StudentRepository;
 import demo.request.CreateStudentRequest;
+import demo.request.InQueryRequest;
 import demo.request.UpdateStudentRequest;
 
 @Service
@@ -58,6 +59,10 @@ public class StudentService {
 
 	public List<Student> getByFirstNameOrLastName(String firstName, String lastName) {
 		return studentRepository.findByFirstNameOrLastName(firstName, lastName);
+	}
+
+	public List<Student> getByFirstNameIn(InQueryRequest firstNames) {
+		return studentRepository.findByFirstNameIn(firstNames.getFirstNames());
 	}
 
 }
