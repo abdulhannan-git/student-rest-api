@@ -26,6 +26,7 @@ public class StudentResponse {
 	private String lastName;
 
 	private String email;
+	private String fullName;
 
 	/*
 	 * public StudentResponse(long id, String firstName, String lastName) { super();
@@ -51,5 +52,6 @@ public class StudentResponse {
 		this.firstName = student.getFirstName();
 		this.lastName = student.getLastName();
 		this.email = student.getEmail();
+		this.fullName = student.getFirstName() + " " + student.getLastName();
 	}
 }

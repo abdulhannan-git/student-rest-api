@@ -41,7 +41,8 @@ public class StudentController {
 
 	@GetMapping("/getJackson")
 	public StudentResponse getStu() {
-		StudentResponse studentResponse = new StudentResponse(1, "Abdul", "Hannan", "abdul.hannan@gmail.com");
+		StudentResponse studentResponse = new StudentResponse(1, "Abdul", "Hannan", "abdul.hannan@gmail.com",
+				"Abdul Hannan");
 		studentResponse.setFirstName("Believer");
 		return studentResponse;
 	}
@@ -123,4 +124,48 @@ public class StudentController {
 		return studentResponseList;
 	}
 
+	@GetMapping("/getAllByPagination")
+	public List<StudentResponse> getAllByPagination(@RequestParam int pageNo, @RequestParam int pageSize) {
+		List<Student> student = studentService.getAllByPagination(pageNo, pageSize);
+		List<StudentResponse> studentResponseList = new ArrayList<>();
+		student.stream().forEach(s -> studentResponseList.add(new StudentResponse(s)));
+		return studentResponseList;
+	}
+
+	@GetMapping("/getAllBySorting")
+	public List<StudentResponse> getAllBySorting() {
+		List<Student> student = studentService.getAllBySorting();
+		List<StudentResponse> studentResponseList = new ArrayList<>();
+		student.stream().forEach(s -> studentResponseList.add(new StudentResponse(s)));
+		return studentResponseList;
+	}
+
+	@GetMapping("/getByFirstNameLike/{firstName}")
+	public List<StudentResponse> getByFirstNameLike(@PathVariable String firstName) {
+		List<Student> student = studentService.like(firstName);
+
+		List<StudentResponse> studentResponseList = new ArrayList<>();
+		student.stream().forEach(s -> studentResponseList.add(new StudentResponse(s)));
+		return studentResponseList;
+	}
+
+	@GetMapping("getByFirstNameStartsWith/{firstName}")
+	public List<StudentResponse> getByFirstNameStartsWith(@PathVariable String firstName) {
+		List<Student> student = studentService.getByStartsWithFirstName(firstName);
+		List<StudentResponse> studentResponseList = new ArrayList<>();
+		student.stream().forEach(s -> studentResponseList.add(new StudentResponse(s)));
+		return studentResponseList;
+	}
+
+	@PutMapping("updateFirstNameAndLastName/{id}/{firstName}/{lastName}")
+	public String updateFirstNameAndLastName(@PathVariable Long id, @PathVariable String firstName,
+			@PathVariable String lastName) {
+		return studentService.updateFirstNameAndLastName(id, firstName, lastName) + " Student(s) updated";
+
+	}
+
+	@DeleteMapping("deleteByFirstName/{firstName}")
+	public String deleteByFirstName(@PathVariable String firstName) {
+		return studentService.deleteByFirstName(firstName) + " Student(s) deleted";
+	}
 }
