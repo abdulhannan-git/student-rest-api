@@ -42,7 +42,7 @@ public class StudentController {
 	@GetMapping("/getJackson")
 	public StudentResponse getStu() {
 		StudentResponse studentResponse = new StudentResponse(1, "Abdul", "Hannan", "abdul.hannan@gmail.com",
-				"Abdul Hannan");
+				"Abdul Hannan", "221b baker street", "London");
 		studentResponse.setFirstName("Believer");
 		return studentResponse;
 	}
@@ -167,5 +167,13 @@ public class StudentController {
 	@DeleteMapping("deleteByFirstName/{firstName}")
 	public String deleteByFirstName(@PathVariable String firstName) {
 		return studentService.deleteByFirstName(firstName) + " Student(s) deleted";
+	}
+
+	@GetMapping("/getByAddressCity/{city}")
+	public List<StudentResponse> getByAddressCity(@PathVariable String city) {
+		List<Student> studentList = studentService.getByAddressCity(city);
+		List<StudentResponse> studentResponseList = new ArrayList<>();
+		studentList.stream().forEach(s -> studentResponseList.add(new StudentResponse(s)));
+		return studentResponseList;
 	}
 }

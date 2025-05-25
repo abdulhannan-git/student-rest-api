@@ -9,7 +9,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import demo.entity.Address;
 import demo.entity.Student;
+import demo.repository.AddressRepository;
 import demo.repository.StudentRepository;
 import demo.request.CreateStudentRequest;
 import demo.request.InQueryRequest;
@@ -21,12 +23,21 @@ public class StudentService {
 	@Autowired
 	StudentRepository studentRepository;
 
+	@Autowired
+	AddressRepository addressRepository;
+
 	public List<Student> getAllStudents() {
 		return studentRepository.findAll();
 	}
 
 	public Student createStudent(CreateStudentRequest createStudentRequest) {
-		return studentRepository.save(new Student(createStudentRequest));
+		Address address = new Address();
+		Student student = new Student(createStudentRequest);
+		address.setStreet(createStudentRequest.getStreet());
+		address.setCity(createStudentRequest.getCity());
+		address = addressRepository.save(address);
+		student.setAddress(address);
+		return studentRepository.save(student);
 
 	}
 
@@ -94,6 +105,12 @@ public class StudentService {
 
 	public Integer deleteByFirstName(String firstName) {
 		return studentRepository.deleteByFirstName(firstName);
+	}
+
+	public List<Student> getByAddressCity(String city) {
+		
+		//return studentRepository.findByAddressCity(city);
+		return studentRepository.getByAddressCity(city);
 	}
 
 }
