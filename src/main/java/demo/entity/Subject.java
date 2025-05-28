@@ -5,26 +5,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "address")
-public class Address {
+@Table(name="subject")
+public class Subject {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-
-	@Column(name = "street")
-	private String street;
-
-	@Column(name = "city")
-	private String city;
-
-	@OneToOne(mappedBy = "address")
+	
+	@Column(name = "subject_name")
+	private String subjectName;
+	
+	@Column(name = "marks_obtained")
+	private String marksObtained;
+	
+	@ManyToOne
+	@JoinColumn(name = "student_id")
 	private Student student;
+	
 }
