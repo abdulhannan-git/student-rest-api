@@ -1,5 +1,6 @@
 package demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,13 +8,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import demo.entity.Address;
 import demo.entity.Student;
+import demo.entity.Subject;
 import demo.repository.AddressRepository;
 import demo.repository.StudentRepository;
+import demo.repository.SubjectRepository;
 import demo.request.CreateStudentRequest;
+import demo.request.CreateSubjectRequest;
 import demo.request.InQueryRequest;
 import demo.request.UpdateStudentRequest;
 
@@ -26,6 +29,9 @@ public class StudentService {
 	@Autowired
 	AddressRepository addressRepository;
 
+	@Autowired
+	SubjectRepository subjectRepository;
+	
 	public List<Student> getAllStudents() {
 		return studentRepository.findAll();
 	}
@@ -37,7 +43,22 @@ public class StudentService {
 		address.setCity(createStudentRequest.getCity());
 		address = addressRepository.save(address);
 		student.setAddress(address);
-		return studentRepository.save(student);
+		student = studentRepository.save(student);
+		
+		List<Subject> subjectLists = new ArrayList<>();
+		if(createStudentRequest.getSubjectsLearning()!=null) {
+			for(CreateSubjectRequest createSubjectRequest :
+					createStudentRequest.getSubjectsLearning()) {
+				Subject subject = new Subject();
+				subject.setSubjectName(createSubjectRequest.getSubjectName());
+				subject.setMarksObtained(createSubjectRequest.getMarksObtained());
+				subject.setStudent(student);
+				subjectLists.add(subject);
+			}
+			subjectRepository.saveAll(subjectLists);
+		}
+		student.setLearningSubjects(subjectLists);
+		return student;
 
 	}
 

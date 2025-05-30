@@ -24,7 +24,7 @@ public class Subject {
 	private String subjectName;
 	
 	@Column(name = "marks_obtained")
-	private String marksObtained;
+	private Double marksObtained;
 	
 	@ManyToOne
 	@JoinColumn(name = "student_id")

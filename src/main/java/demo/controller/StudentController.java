@@ -2,7 +2,7 @@ package demo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,16 +39,15 @@ public class StudentController {
 		return appName;
 	}
 
-	@GetMapping("/getJackson")
-	public StudentResponse getStu() {
-		StudentResponse studentResponse = new StudentResponse(1, "Abdul", "Hannan", "abdul.hannan@gmail.com",
-				"Abdul Hannan", "221b baker street", "London");
-		studentResponse.setFirstName("Believer");
-		return studentResponse;
-	}
+	Logger logger = org.slf4j.LoggerFactory.getLogger(StudentController.class);
 
 	@GetMapping("/getAll")
 	public List<StudentResponse> getAll() {
+		logger.error("Inside Error");
+		logger.warn("Inside Warning");
+		logger.info("Inside Info");
+		logger.debug("Inside debug");
+		logger.trace("Inside trace");
 		List<StudentResponse> studentResponseList = new ArrayList<>();
 		List<Student> studentList = studentService.getAllStudents();
 		studentList.stream().forEach(s -> studentResponseList.add(new StudentResponse(s)));
@@ -118,9 +117,15 @@ public class StudentController {
 
 	@GetMapping("/getByFirstNameIn")
 	public List<StudentResponse> getByFirstNameIn(@RequestBody InQueryRequest inQueryRequest) {
+
+		logger.info("inQueryRequest =" + inQueryRequest);
+
 		List<Student> student = studentService.getByFirstNameIn(inQueryRequest);
 		List<StudentResponse> studentResponseList = new ArrayList<>();
 		student.stream().forEach(s -> studentResponseList.add(new StudentResponse(s)));
+
+		logger.info("studentResponseList =" + studentResponseList);
+
 		return studentResponseList;
 	}
 

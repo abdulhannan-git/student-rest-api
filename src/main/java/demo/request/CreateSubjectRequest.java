@@ -3,7 +3,7 @@ package demo.request;
 import lombok.Data;
 
 @Data
-public class createSubjectRequest {
+public class CreateSubjectRequest {
 
 	private String subjectName;
 
