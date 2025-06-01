@@ -118,7 +118,7 @@ public class StudentController {
 	@GetMapping("/getByFirstNameIn")
 	public List<StudentResponse> getByFirstNameIn(@RequestBody InQueryRequest inQueryRequest) {
 
-		logger.info("inQueryRequest =" + inQueryRequest);
+		//logger.info("inQueryRequest =" + inQueryRequest);
 
 		List<Student> student = studentService.getByFirstNameIn(inQueryRequest);
 		List<StudentResponse> studentResponseList = new ArrayList<>();
